@@ -1,8 +1,10 @@
 (function() {
+
     var STATUS_URL = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
 
     var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
         SLACK_CONTAINER_SELECTOR = ".slackContainer",
+        GUIDE_UL_SELECTOR = ".guide-ul",
         BISHOP_ID = "Bishop",
         CARLOUGH_ID = "Carlough",
         HOWARD_ID = "Howard",
@@ -44,9 +46,21 @@
     
 
     function createPerson(currentWill) {
+        // for map
         var $person = $("<div class='person' id='" + currentWill.name + "'></div>");
         $person.css("background-color", currentWill.color);
+        var $personForGuide = $person.clone();
+        $person.addClass("position--absolute");
         $(IMAGE_CONTAINER_SELECTOR).append($person);
+        
+        // for guide
+        var $li = $("<li></li>");
+        $personForGuide.attr("id", "");
+        $personForGuide.addClass("display--inlineBlock");
+        $li.append($personForGuide);
+        $li.append("<div class='display--inlineBlock'>Will " + currentWill.name  + "</div>");
+        $(GUIDE_UL_SELECTOR).append($li); 
+        
         checkSlackStatus(currentWill);
     }
 

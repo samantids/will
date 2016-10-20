@@ -1,3 +1,6 @@
+.display--inlineBlock {
+    display: inline-block;
+}
 .align--center {
 	text-align: center;
 }
@@ -7,6 +10,9 @@
 .margin--top {
 	margin-top: 16px;
 }
+.position--absolute {
+    position: absolute;
+}
 .imageContainer {
 	position: fixed;
 	/*max-width: 800px;*/
@@ -14,10 +20,12 @@
 .imageContainer img {
 	/*width: 800px;*/
 }
+.guide-ul {
+    list-style:none;
+}
 .person {
 	border-radius: 10px;
 	z-index: 100;
 	width: 20px;
 	height: 20px;
-	position: absolute;
 }
