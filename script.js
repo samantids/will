@@ -47,7 +47,7 @@
 
     function createPerson(currentWill) {
         // for map
-        var $person = $("<div class='person' id='" + currentWill.name + "'></div>");
+        var $person = $("<div class='person " + currentWill.name + "' id='" + currentWill.name + "'></div>");
         $person.css("background-color", currentWill.color);
         var $personForGuide = $person.clone();
         $person.addClass("position--absolute");
@@ -58,7 +58,7 @@
         $personForGuide.attr("id", "");
         $personForGuide.addClass("display--inlineBlock");
         $li.append($personForGuide);
-        $li.append("<div class='display--inlineBlock'>Will " + currentWill.name  + "</div>");
+        $li.append("<div class='display--inlineBlock'>Will " + currentWill.name + "</div>");
         $(GUIDE_UL_SELECTOR).append($li); 
         
         checkSlackStatus(currentWill);
