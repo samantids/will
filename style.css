@@ -1,0 +1,23 @@
+.align--center {
+	text-align: center;
+}
+.margin--bottom {
+	margin-bottom: 16px;
+}
+.margin--top {
+	margin-top: 16px;
+}
+.imageContainer {
+	position: fixed;
+	/*max-width: 800px;*/
+}
+.imageContainer img {
+	/*width: 800px;*/
+}
+.person {
+	border-radius: 10px;
+	z-index: 100;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+}

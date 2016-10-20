@@ -1,56 +1,82 @@
-var statusUrl = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
+(function() {
+    var STATUS_URL = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
 
-var bishopSlack = "U2612DAJK";
-var carloughSlack = "U0AF1P7BR";
-var howardSlack = "U03M3J4MP";
-var ruizSlack = "U0AHRPE3B";
-var weaverSlack = "U0K5JA464";
+    var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
+        SLACK_CONTAINER_SELECTOR = ".slackContainer",
+        BISHOP_ID = "Bishop",
+        CARLOUGH_ID = "Carlough",
+        HOWARD_ID = "Howard",
+        RUIZ_ID = "Ruiz",
+        WEAVER_ID = "Weaver",
+        BISHOP_SLACK = "U2612DAJK",
+        CARLOUGH_SLACK = "U0AF1P7BR",
+        HOWARD_SLACK = "U03M3J4MP",
+        RUIZ_SLACK = "U0AHRPE3B",
+        WEAVER_SLACK = "U0K5JA464";
 
-var slackList = [{"name":"Bishop", "user":"U2612DAJK"}, 
-{"name":"Carlough", "user":"U0AF1P7BR"}, 
-{"name":"Howard", "user":"U03M3J4MP"}, 
-{"name":"Ruiz", "user":"U0AHRPE3B"}, 
-{"name":"Weaver", "user":"U0K5JA464"}];
+    var SLACK_LIST = [{"name": BISHOP_ID, "user": BISHOP_SLACK, "color": "#d1f9ff"},
+                    {"name": CARLOUGH_ID, "user": CARLOUGH_SLACK, "color": "#feff86"},
+                    {"name": HOWARD_ID, "user": HOWARD_SLACK, "color": "#e8a6ff"},
+                    {"name": RUIZ_ID, "user": RUIZ_SLACK, "color": "#ff9797"},
+                    {"name": WEAVER_ID, "user": WEAVER_SLACK, "color": "#9aff91"}],
+        COORDINATE_MAP = {
+            "Bishop": {"x": "27%", "y": "31%"}, //18
+            "Carlough": {"x": "76%", "y": "82%"}, //95
+            "Howard": {"x": "55%", "y": "40%"}, //42 or 40
+            "Ruiz": {"x": "20%", "y": "90%"}, //14
+            "Weaver": {"x": "44%", "y": "94%"}, //48
+            "10front": {"x": "14%", "y": "66%"},
+            "11back": {"x": "0%", "y": "0%"},
+            "11mid": {"x": "10%", "y": "50%"},
+        };
 
-function slackStatus(willStatusUrl, currentWill){
-        console.log("test test");
-        
+    function createPerson(currentWill) {
+        var $person = $("<div class='person' id='" + currentWill.name + "'></div>");
+        $person.css("background-color", currentWill.color);
+        $(IMAGE_CONTAINER_SELECTOR).append($person);
+        checkSlackStatus(currentWill);
+    }
+
+    function checkSlackStatus(currentWill) {
+        var willStatusUrl = STATUS_URL + currentWill.user;
         //API call
-        
         $.ajax({
                 url: willStatusUrl,
                 dataType: "json",
                 success:
-                    //console.log("api connected")
-                    function(data){
-                        var status = data.presence;
-                        var autoAwayStatus = data.auto_away;
-                        //console.log(status);
-                        
-                        switch(status){
-                            case "active": 
-                                $(".slack-container").append("<p>Will " + currentWill.name + " is active.</p>");
+                    function(data) {
+                        var name = currentWill.name,
+                            status = data.presence,
+                            autoAwayStatus = data.auto_away;
+
+                        switch(status) {
+                            case "active":
+                                $(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is active.</div>");
                                 break;
                             case "away":
-                                if (autoAwayStatus){
-                                    $(".slack-container").append("<p>Will " + currentWill.name + " is gone.</p>");
+                                if (autoAwayStatus) {
+                                    $(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is gone.</div>");
                                 } else {
-                                    $(".slack-container").append("<p>Will " + currentWill.name + " is away on purpose.</p>");
+                                    $(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is away on purpose.</div>");
                                 }
                                 break;
                         }
-                }
-                
-        });
-} 
 
-function slackPick(){
-    for (var i = 0; i <slackList.length; i++){
-        var willStatusUrl = statusUrl + slackList[i].user;
-        //slackStatus();
-        
-        slackStatus(willStatusUrl, slackList[i]);
+                        $("#" + name).css("left", COORDINATE_MAP[name].x);
+                        $("#" + name).css("top", COORDINATE_MAP[name].y);
+                }
+        });
     }
-}
-    
-$(document).ready(slackPick);
+
+    function checkGoogleCalendar() {
+        // TODO
+    }
+
+    function slackPick() {
+        for (var i = 0; i <SLACK_LIST.length; i++){
+            createPerson(SLACK_LIST[i]);
+        }
+    }
+
+    $(document).ready(slackPick);
+})();
