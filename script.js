@@ -28,7 +28,20 @@
             "10front": {"x": "14%", "y": "66%"},
             "11back": {"x": "0%", "y": "0%"},
             "11mid": {"x": "10%", "y": "50%"},
+        },
+        CALENDAR_MAP = {
+            "10front": "meetup.com_33383337313533302d373236@resource.calendar.google.com",
+            "sushidog": "meetup.com_363534363636383838@resource.calendar.google.com",
+            "readingroom": "meetup.com_33303231363532343633@resource.calendar.google.com",
+            "pride": "meetup.com_2d3930303636323736323837@resource.calendar.google.com",
+            "11back": "meetup.com_2d363231343931382d323732@resource.calendar.google.com",
+            "11mid": "meetup.com_31383438323937312d383133@resource.calendar.google.com",
+            "poodle": "meetup.com_2d3830303134353936373838@resource.calendar.google.com",
+            "bobross": "meetup.com_3334353237323633313737@resource.calendar.google.com",
+            "pairingstation": "meetup.com_2d37383634383431322d353730@resource.calendar.google.com",
         };
+        
+    
 
     function createPerson(currentWill) {
         var $person = $("<div class='person' id='" + currentWill.name + "'></div>");
