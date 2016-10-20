@@ -24,10 +24,20 @@ function slackStatus(willStatusUrl, currentWill){
                     //console.log("api connected")
                     function(data){
                         var status = data.presence;
+                        var autoAwayStatus = data.auto_away;
                         //console.log(status);
-                        if(status=="active"){
-                            //console.log("he's active");
-                            $(".slack-container").append("<p>Will <p>" + currentWill.name + "is active</p>");
+                        
+                        switch(status){
+                            case "active": 
+                                $(".slack-container").append("<p>Will " + currentWill.name + " is active.</p>");
+                                break;
+                            case "away":
+                                if (autoAwayStatus){
+                                    $(".slack-container").append("<p>Will " + currentWill.name + " is gone.</p>");
+                                } else {
+                                    $(".slack-container").append("<p>Will " + currentWill.name + " is away on purpose.</p>");
+                                }
+                                break;
                         }
                 }
                 
