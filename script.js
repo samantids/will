@@ -1,5 +1,4 @@
 (function() {
-    var slackkey = 'xoxp-3569420125-10493169398-94086187185-603e68a8532db55788b633fafd9983a1';
     var STATUS_URL = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
 
     var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
