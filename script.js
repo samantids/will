@@ -24,20 +24,20 @@
                     {"name": RUIZ_ID, "user": RUIZ_SLACK, "color": "#ff9797", "email": "willr@meetup.com"},
                     {"name": WEAVER_ID, "user": WEAVER_SLACK, "color": "#9aff91", "email": "wweaver@meetup.com"}],
         COORDINATE_MAP = {
-            "Bishop": {"x": "27%", "y": "31%"}, //18
-            "Carlough": {"x": "76%", "y": "82%"}, //95
-            "Howard": {"x": "55%", "y": "40%"}, //42 or 40
-            "Ruiz": {"x": "20%", "y": "90%"}, //14
-            "Weaver": {"x": "44%", "y": "94%"}, //48
-            "10th Floor Meeting Room": {"x": "14%", "y": "66%"},
-            "Sushi Dog": {"x": "0%", "y": "0%"},
-            "Reading Room": {"x": "0%", "y": "0%"},
-            "Pride": {"x": "0%", "y": "0%"},
-            "11th - Back": {"x": "0%", "y": "0%"},
-            "11th - Middle": {"x": "10%", "y": "50%"},
-            "Poodle": {"x": "0%", "y": "0%"},
-            "BobRoss": {"x": "0%", "y": "0%"},
-            "Pairing Station": {"x": "0%", "y": "0%"},
+            "Bishop": {"x": "66.5%", "y": "45%"}, //18
+            "Carlough": {"x": "15%", "y": "79%"}, //95
+            "Howard": {"x": "47%", "y": "44%"}, //42 or 40
+            "Ruiz": {"x": "82%", "y": "75%"}, //14
+            "Weaver": {"x": "59%", "y": "70%"}, //48
+            "10th Floor Meeting Room": {"x": "88%", "y": "88%"},
+            "Sushi Dog": {"x": "71%", "y": "88%"},
+            "Reading Room": {"x": "64%", "y": "88%"},
+            "Pride": {"x": "57%", "y": "88%"},
+            "11th - Back": {"x": "4%", "y": "46%"},
+            "11th - Middle": {"x": "47%", "y": "59%"},
+            "Poodle": {"x": "71%", "y": "59%"},
+            "BobRoss": {"x": "64%", "y": "59%"},
+            "Pairing Station": {"x": "5%", "y": "71%"},
         },
         CALENDAR_MAP = {
             "10th Floor Meeting Room": "meetup.com_33383337313533302d373236@resource.calendar.google.com",
