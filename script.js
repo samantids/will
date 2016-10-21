@@ -57,8 +57,9 @@
     function createPerson(currentWill) {
         // for map
         var $person = $("<div class='person " + currentWill.name + "' id='" + currentWill.name + "'></div>");
-        $person.css("background-color", currentWill.color);
-        var $personForGuide = $person.clone();
+        var $img = $("<img></img>");
+        $img.attr("src", "images/lights/" + currentWill.name + "-Light.png");
+        $person.append($img);
         $person.addClass("position--fixed");
         $(IMAGE_CONTAINER_SELECTOR).append($person);
     }

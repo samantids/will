@@ -69,6 +69,7 @@ body {
 .person {
 	border-radius: 10px;
 	z-index: 100;
-	width: 20px;
-	height: 20px;
+}
+.person img {
+	width: 80%;
 }
