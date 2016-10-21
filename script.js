@@ -4,7 +4,6 @@
 
     var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
         SLACK_CONTAINER_SELECTOR = ".slackContainer",
-        GUIDE_UL_SELECTOR = ".guide-ul",
         DISPLAY_NONE_CLASS = "display--none",
         DISPLAY_INLINE_CLASS = "display--inline",
         GCAL_ACCEPTED_STATUS = "accepted",
@@ -59,18 +58,11 @@
     function createPerson(currentWill) {
         // for map
         var $person = $("<div class='person " + currentWill.name + "' id='" + currentWill.name + "'></div>");
-        $person.css("background-color", currentWill.color);
-        var $personForGuide = $person.clone();
-        $person.addClass("position--absolute");
+        var $img = $("<img></img>");
+        $img.attr("src", "images/lights/" + currentWill.name + "-Light.png");
+        $person.append($img);
+        $person.addClass("position--fixed");
         $(IMAGE_CONTAINER_SELECTOR).append($person);
-        
-        // for guide
-        var $li = $("<li></li>");
-        $personForGuide.attr("id", "");
-        $personForGuide.addClass("display--inlineBlock");
-        $li.append($personForGuide);
-        $li.append("<div class='display--inlineBlock'>Will " + currentWill.name + "</div>");
-        $(GUIDE_UL_SELECTOR).append($li);
     }
 
     function checkSlackStatus(currentWill) {
@@ -131,7 +123,7 @@
 
     // Your Client ID can be retrieved from your project in the Google
     // Developer Console, https://console.developers.google.com
-    var CLIENT_ID = ;
+    var CLIENT_ID = "";
 
     var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
