@@ -1,5 +1,4 @@
 (function() {
-    
     var STATUS_URL = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
 
     var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
@@ -58,7 +57,7 @@
     function createPerson(currentWill) {
         // for map
         var $person = $("<div class='person " + currentWill.name + "' id='" + currentWill.name + "'></div>");
-        var $img = $("<img></img>");
+        var $img = $("<img class='light'></img>");
         $img.attr("src", "images/lights/" + currentWill.name + "-Light.png");
         $person.append($img);
         $person.addClass("position--fixed");
@@ -281,31 +280,41 @@
         return now <= end && now >= start;
     }
     
-    function hoverEvent(){
+    function hoverEvent() {
         $(".Bishop").hover(function(){
-            $(this).css("background-color", "red");
+            $(".Bishop").find(".light").css("opacity", "1");
+            $(".Bishop.button").attr("src", "images/buttons/WillBishop-ActiveBtn.png" );
             }, function(){
-            $(this).css("background-color", "black");
+            $(".Bishop").find(".light").css("opacity", ".7");
+            $(".Bishop.button").attr("src", "images/buttons/WillBishop-DisabledBtn.png" );
         });
         $(".Carlough").hover(function(){
-            $(this).css("background-color", "red");
+            $(".Carlough").find(".light").css("opacity", "1");
+            $(".Carlough.button").attr("src", "images/buttons/WillCarlough-ActiveBtn.png" );
             }, function(){
-            $(this).css("background-color", "black");
+            $(".Carlough").find(".light").css("opacity", ".7");
+            $(".Carlough.button").attr("src", "images/buttons/WillCarlough-DisabledBtn.png" );
         });
         $(".Howard").hover(function(){
-            $(this).css("background-color", "red");
+            $(".Howard").find(".light").css("opacity", "1");
+            $(".Howard.button").attr("src", "images/buttons/WillHoward-ActiveBtn.png" );
             }, function(){
-            $(this).css("background-color", "black");
+            $(".Howard").find(".light").css("opacity", ".7");
+            $(".Howard.button").attr("src", "images/buttons/WillHoward-DisabledBtn.png" );
         });
         $(".Ruiz").hover(function(){
-            $(this).css("background-color", "red");
+            $(".Ruiz").find(".light").css("opacity", "1");
+            $(".Ruiz.button").attr("src", "images/buttons/WillRuiz-ActiveBtn.png" );
             }, function(){
-            $(this).css("background-color", "black");
+            $(".Ruiz").find(".light").css("opacity", ".7");
+            $(".Ruiz.button").attr("src", "images/buttons/WillRuiz-DisabledBtn.png" );
         });
         $(".Weaver").hover(function(){
-            $(this).css("background-color", "red");
+            $(".Weaver").find(".light").css("opacity", "1");
+            $(".Weaver.button").attr("src", "images/buttons/WillWeaver-ActiveBtn.png" );
             }, function(){
-            $(this).css("background-color", "black");
+            $(".Weaver").find(".light").css("opacity", ".7");
+            $(".Weaver.button").attr("src", "images/buttons/WillWeaver-DisabledBtn.png" );
         });
         
     }
