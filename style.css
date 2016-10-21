@@ -1,6 +1,8 @@
 body {
 	background-image: url("images/Background.png");
 	background-size: cover;
+	color: #FFFFFF;
+	font-family: 'Open Sans', sans-serif;
 }
 .display--inlineBlock {
     display: inline-block;
@@ -50,15 +52,15 @@ body {
 	transform: translate(-87%, -32%);
 }
 .imageContainer .label11 {
-	top: 39%;
-	transform: translate(-87%, -61%);
+	top: 38.5%;
+	transform: translate(-87%, -61.5%);
 }
 .guide {
 	width: 100%;
 	position: fixed;
 	left: 50%;
-	top: 36%;
-	transform: translate(-50%,-64%);
+	top: 34%;
+	transform: translate(-50%,-66%);
 }
 .guide img {
 	height: 30px;
@@ -72,5 +74,32 @@ body {
 }
 .person .light {
 	width: 80%;
-	opacity: 0.7;
+	opacity: 0.85;
+}
+.popup {
+	z-index: 101;
+	background-color: #000;
+	opacity: 0.9;
+	border-radius: 3px;
+	font-size: 12px;
+	width: auto;
+}
+.popup.Carlough {
+	border: 1px solid #FF9F00;
+}
+.popup.Ruiz {
+	border: 1px solid #BD10E0;
+}
+.popup.Howard {
+	border: 1px solid #4A90E2;
+}
+.popup.Bishop {
+	border: 1px solid #F8E71C;
+}
+.popup.Weaver {
+	border: 1px solid #50E3C2;
+}
+.popupText {
+	text-align: center;
+	padding: 16px;
 }

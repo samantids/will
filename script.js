@@ -16,7 +16,9 @@
         CARLOUGH_SLACK = "U0AF1P7BR",
         HOWARD_SLACK = "U03M3J4MP",
         RUIZ_SLACK = "U0AHRPE3B",
-        WEAVER_SLACK = "U0K5JA464";
+        WEAVER_SLACK = "U0K5JA464",
+        FULL_OPACITY = 1,
+        ACTIVE_OPACITY = 0.85;
 
     var WILL_LIST = [{"name": BISHOP_ID, "user": BISHOP_SLACK, "color": "#d1f9ff", "email": "wbishop@meetup.com"},
                     {"name": CARLOUGH_ID, "user": CARLOUGH_SLACK, "color": "#feff86", "email": "wcarlough@meetup.com"},
@@ -66,7 +68,6 @@
 
     function checkSlackStatus(currentWill) {
         var willStatusUrl = STATUS_URL + currentWill.user;
-        //API call
         $.ajax({
                 url: willStatusUrl,
                 dataType: "json",
@@ -75,17 +76,20 @@
                         status = data.presence,
                         autoAwayStatus = data.auto_away;
 
+                    for (var i = 0; i < WILL_LIST.length; i++) {
+                        if (WILL_LIST[i].name == name) {
+                            WILL_LIST[i]["slackStatus"] = status;
+                        }
+                    }
+
                     switch(status) {
                         case "active":
-                            //$(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is active.</div>");
                             console.log("Will " + name + " is active.");
                             break;
                         case "away":
                             if (autoAwayStatus) {
-                                //$(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is gone.</div>");
                                 console.log("Will " + name + " is gone.");
                             } else {
-                                //$(SLACK_CONTAINER_SELECTOR).append("<div>Will " + name + " is away on purpose.</div>");
                                 console.log("Will " + name + " is away on purpose.");
                             }
                             break;
@@ -104,12 +108,34 @@
                     if (willHasGcalEvent && gcalEvent !== null) {
                         $("#" + name).css("left", COORDINATE_MAP[gcalEvent.room].x);
                         $("#" + name).css("top", COORDINATE_MAP[gcalEvent.room].y);
+                        addToPopup(currentWill, true, gcalEvent);
                     } else {
                         $("#" + name).css("left", COORDINATE_MAP[name].x);
                         $("#" + name).css("top", COORDINATE_MAP[name].y);
+                        addToPopup(currentWill, false, null);
                     }
                 }
         });
+    }
+
+    function addToPopup(currentWill, isGoogle, event) {
+        var $popup = $("." + currentWill.name + ".popup");
+        if (isGoogle) {
+            // popup to show gcal event
+            $popup.html("<div class='popupText'>Will " + currentWill.name + " is at " + event.name + " in " + event.room +".</div>");
+            //$popup.html("<p>" + event.name + "</p> <p>" + event.room + "</p>");
+        } else {
+            // popup to show slack status
+            var status = currentWill["slackStatus"];
+            switch(status) {
+                case "active":
+                    $popup.html("<div class='popupText'>Will " + currentWill.name + " is available.</div>");
+                    break;
+                case "away":
+                    $popup.html("<div class='popupText'>Will " + currentWill.name + " is unavailable.<div>");
+                    break;
+            }
+        }
     }
 
     function createPeople() {
@@ -269,6 +295,7 @@
         if (CUR_CAL_NUM == 9) {
             for(var j = 0; j <WILL_LIST.length; j++) {
                 checkSlackStatus(WILL_LIST[j]);
+                hoverEvent();
             }
         }
     }
@@ -282,39 +309,69 @@
     
     function hoverEvent() {
         $(".Bishop").hover(function(){
-            $(".Bishop").find(".light").css("opacity", "1");
+            $(".Bishop").find(".light").css("opacity", FULL_OPACITY);
             $(".Bishop.button").attr("src", "images/buttons/WillBishop-ActiveBtn.png" );
+            var left = $("#Bishop").css("left"),
+                top = $("#Bishop").css("top");
+            $(".Bishop.popup").css("left", left);
+            $(".Bishop.popup").css("top", (parseInt(top.substring(0, top.length - 2), 10) - 40) + "px");
+            $(".Bishop.popup").removeClass(DISPLAY_NONE_CLASS);
             }, function(){
-            $(".Bishop").find(".light").css("opacity", ".7");
+            $(".Bishop").find(".light").css("opacity", ACTIVE_OPACITY);
             $(".Bishop.button").attr("src", "images/buttons/WillBishop-DisabledBtn.png" );
+            $(".Bishop.popup").addClass(DISPLAY_NONE_CLASS);
         });
         $(".Carlough").hover(function(){
-            $(".Carlough").find(".light").css("opacity", "1");
+            $(".Carlough").find(".light").css("opacity", FULL_OPACITY);
             $(".Carlough.button").attr("src", "images/buttons/WillCarlough-ActiveBtn.png" );
+            var left = $("#Carlough").css("left"),
+                top = $("#Carlough").css("top");
+            $(".Carlough.popup").css("left", left);
+            $(".Carlough.popup").css("top", (parseInt(top.substring(0, top.length - 2), 10) - 40) + "px");
+            $(".Carlough.popup").removeClass(DISPLAY_NONE_CLASS);
             }, function(){
-            $(".Carlough").find(".light").css("opacity", ".7");
+            $(".Carlough").find(".light").css("opacity", ACTIVE_OPACITY);
             $(".Carlough.button").attr("src", "images/buttons/WillCarlough-DisabledBtn.png" );
+            $(".Carlough.popup").addClass(DISPLAY_NONE_CLASS);
         });
         $(".Howard").hover(function(){
-            $(".Howard").find(".light").css("opacity", "1");
+            $(".Howard").find(".light").css("opacity", FULL_OPACITY);
             $(".Howard.button").attr("src", "images/buttons/WillHoward-ActiveBtn.png" );
+            var left = $("#Howard").css("left"),
+                top = $("#Howard").css("top");
+            $(".Howard.popup").css("left", left);
+            $(".Howard.popup").css("top", (parseInt(top.substring(0, top.length - 2), 10) - 40) + "px");
+            $(".Howard.popup").removeClass(DISPLAY_NONE_CLASS);
             }, function(){
-            $(".Howard").find(".light").css("opacity", ".7");
+            $(".Howard").find(".light").css("opacity", ACTIVE_OPACITY);
             $(".Howard.button").attr("src", "images/buttons/WillHoward-DisabledBtn.png" );
+            $(".Howard.popup").addClass(DISPLAY_NONE_CLASS);
         });
         $(".Ruiz").hover(function(){
-            $(".Ruiz").find(".light").css("opacity", "1");
+            $(".Ruiz").find(".light").css("opacity", FULL_OPACITY);
             $(".Ruiz.button").attr("src", "images/buttons/WillRuiz-ActiveBtn.png" );
+            var left = $("#Ruiz").css("left"),
+                top = $("#Ruiz").css("top");
+            $(".Ruiz.popup").css("left", left);
+            $(".Ruiz.popup").css("top", (parseInt(top.substring(0, top.length - 2), 10) - 40) + "px");
+            $(".Ruiz.popup").removeClass(DISPLAY_NONE_CLASS);
             }, function(){
-            $(".Ruiz").find(".light").css("opacity", ".7");
+            $(".Ruiz").find(".light").css("opacity", ACTIVE_OPACITY);
             $(".Ruiz.button").attr("src", "images/buttons/WillRuiz-DisabledBtn.png" );
+            $(".Ruiz.popup").addClass(DISPLAY_NONE_CLASS);
         });
         $(".Weaver").hover(function(){
-            $(".Weaver").find(".light").css("opacity", "1");
+            $(".Weaver").find(".light").css("opacity", FULL_OPACITY);
             $(".Weaver.button").attr("src", "images/buttons/WillWeaver-ActiveBtn.png" );
+            var left = $("#Weaver").css("left"),
+                top = $("#Weaver").css("top");
+            $(".Weaver.popup").css("left", left);
+            $(".Weaver.popup").css("top", (parseInt(top.substring(0, top.length - 2), 10) - 40) + "px");
+            $(".Weaver.popup").removeClass(DISPLAY_NONE_CLASS);
             }, function(){
-            $(".Weaver").find(".light").css("opacity", ".7");
+            $(".Weaver").find(".light").css("opacity", ACTIVE_OPACITY);
             $(".Weaver.button").attr("src", "images/buttons/WillWeaver-DisabledBtn.png" );
+            $(".Weaver.popup").addClass(DISPLAY_NONE_CLASS);
         });
         
     }
@@ -336,7 +393,6 @@
     function init() {
         bindEvents();
         createPeople();
-        hoverEvent();
     }
 
 
