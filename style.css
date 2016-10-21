@@ -1,6 +1,12 @@
 .display--inlineBlock {
     display: inline-block;
 }
+.display--none {
+	display: none;
+}
+.display--inline {
+	display: inline;
+}
 .align--center {
 	text-align: center;
 }
