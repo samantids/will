@@ -1,4 +1,5 @@
 (function() {
+    
     var STATUS_URL = "https://slack.com/api/users.getPresence?token="+ slackkey +"&user=";
 
     var IMAGE_CONTAINER_SELECTOR = ".imageContainer",
@@ -125,10 +126,12 @@
             createPerson(WILL_LIST[i]);
         }
     }
+    
+    
 
     // Your Client ID can be retrieved from your project in the Google
     // Developer Console, https://console.developers.google.com
-    var CLIENT_ID = "437324888638-kjas2gbg9qo7oivhi1bkhl5i64cbpsj8.apps.googleusercontent.com";
+    var CLIENT_ID = ;
 
     var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
@@ -285,6 +288,35 @@
             end = new Date(endTime);
         return now <= end && now >= start;
     }
+    
+    function hoverEvent(){
+        $(".Bishop").hover(function(){
+            $(this).css("background-color", "red");
+            }, function(){
+            $(this).css("background-color", "black");
+        });
+        $(".Carlough").hover(function(){
+            $(this).css("background-color", "red");
+            }, function(){
+            $(this).css("background-color", "black");
+        });
+        $(".Howard").hover(function(){
+            $(this).css("background-color", "red");
+            }, function(){
+            $(this).css("background-color", "black");
+        });
+        $(".Ruiz").hover(function(){
+            $(this).css("background-color", "red");
+            }, function(){
+            $(this).css("background-color", "black");
+        });
+        $(".Weaver").hover(function(){
+            $(this).css("background-color", "red");
+            }, function(){
+            $(this).css("background-color", "black");
+        });
+        
+    }
 
     /**
     * Append an element to the output div containing the given message.
@@ -303,6 +335,7 @@
     function init() {
         bindEvents();
         createPeople();
+        hoverEvent();
     }
 
 
