@@ -1,3 +1,7 @@
+body {
+	background-image: url("images/Background.png");
+	background-size: cover;
+}
 .display--inlineBlock {
     display: inline-block;
 }
@@ -16,15 +20,38 @@
 .margin--top {
 	margin-top: 16px;
 }
-.position--absolute {
-    position: absolute;
+.position--fixed {
+    position: fixed;
 }
 .imageContainer {
 	position: fixed;
-	/*max-width: 800px;*/
+	top: 44%;
 }
-.imageContainer img {
-	/*width: 800px;*/
+.imageContainer .floorplan {
+	width: 800px;
+	position: fixed;
+	left: 50%;
+}
+.imageContainer .floorplan10 {
+	top: 76%;
+	transform: translate(-50%, -24%);
+}
+.imageContainer .floorplan11 {
+	top: 52%;
+	transform: translate(-50%, -48%);
+}
+.imageContainer .label {
+	width: 100px;
+	position: fixed;
+	left: 13%;
+}
+.imageContainer .label10 {
+	top: 68%;
+	transform: translate(-87%, -32%);
+}
+.imageContainer .label11 {
+	top: 39%;
+	transform: translate(-87%, -61%);
 }
 .guide-ul {
     list-style:none;

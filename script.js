@@ -61,7 +61,7 @@
         var $person = $("<div class='person " + currentWill.name + "' id='" + currentWill.name + "'></div>");
         $person.css("background-color", currentWill.color);
         var $personForGuide = $person.clone();
-        $person.addClass("position--absolute");
+        $person.addClass("position--fixed");
         $(IMAGE_CONTAINER_SELECTOR).append($person);
         
         // for guide
