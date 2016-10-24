@@ -23,7 +23,7 @@
     var WILL_LIST = [{"name": BISHOP_ID, "user": BISHOP_SLACK, "color": "#d1f9ff", "email": "wbishop@meetup.com"},
                     {"name": CARLOUGH_ID, "user": CARLOUGH_SLACK, "color": "#feff86", "email": "wcarlough@meetup.com"},
                     {"name": HOWARD_ID, "user": HOWARD_SLACK, "color": "#e8a6ff", "email": "whoward@meetup.com"},
-                    {"name": RUIZ_ID, "user": RUIZ_SLACK, "color": "#ff9797", "email": "willr@meetup.com"},
+                    {"name": RUIZ_ID, "user": RUIZ_SLACK, "color": "#ff9797", "email": "communityleads@meetup.com"},
                     {"name": WEAVER_ID, "user": WEAVER_SLACK, "color": "#9aff91", "email": "wweaver@meetup.com"}],
         COORDINATE_MAP = {
             "Bishop": {"x": "66.5%", "y": "45%"}, //18
@@ -189,7 +189,7 @@
             $authorizeDiv.addClass(DISPLAY_NONE_CLASS);
             $authorizeDiv.removeClass(DISPLAY_INLINE_CLASS);
 
-            loadCalendarApi();
+            loadCalendarApi(null);
         } else {
             // Show auth UI, allowing the user to initiate authorization by
             // clicking authorize button.
@@ -202,8 +202,10 @@
      * Load Google Calendar client library. List upcoming events
      * once client library is loaded.
      */
-    function loadCalendarApi() {
-        gapi.client.load('calendar', 'v3', populateGcalList);
+    function loadCalendarApi(time) {
+        gapi.client.load('calendar', 'v3', function() {
+            populateGcalList(time);
+        });
     }
 
     /**
@@ -211,26 +213,40 @@
      * the authorized user's calendar. If no events are found an
      * appropriate message is printed.
      */
-    function populateGcalList() {
+    function populateGcalList(time) {
         for (var calendar in CALENDAR_MAP) {
             CUR_CAL_NUM++;
-            var nowMinusTwoHours = new Date(),
-                currentHours = nowMinusTwoHours.getHours();
-            nowMinusTwoHours.setHours(currentHours - 4);
+            var theDate = null;
+            if (time === null) {
+                var d = new Date(),
+                currentHours = d.getHours();
+                d.setHours(currentHours - 4);
+                theDate = d;
+            } else {
+                var t = new Date();
+                t.setMonth(time.month - 1);
+                t.setDate(time.day);
+                t.setFullYear(time.year);
+                t.setHours(time.hours);
+                t.setMinutes(time.mins);
+                theDate = t;
+            }
             var calendarId = CALENDAR_MAP[calendar],
                 request = gapi.client.calendar.events.list({
                     'calendarId': calendarId,
-                    'timeMin': nowMinusTwoHours.toISOString(),
+                    'timeMin': theDate.toISOString(),
                     'showDeleted': false,
                     'singleEvents': true,
                     'maxResults': 10,
                     'orderBy': 'startTime'
                 });
-            request.execute(handleEventListResponse);
+            request.execute(function(resp){
+                handleEventListResponse(resp, time);
+            });
         }
     }
 
-    function handleEventListResponse(resp) {
+    function handleEventListResponse(resp, time) {
         var events = resp.items;
 
         if (events.length > 0) {
@@ -240,7 +256,7 @@
                     endTime = event.end.dateTime,
                     start = new Date(startTime),
                     end = new Date(endTime),
-                    isHappeningNow = isEventHappeningNow(startTime, endTime);
+                    isHappeningNow = isEventHappeningNow(startTime, endTime) || time !== null;
 
                 var date = (start.getMonth() + 1) + '/' + start.getDate() + '/' + start.getFullYear(),
                     timeRange = start.getHours() + ':' + start.getMinutes() + ' - ' + end.getHours() + ':' + end.getMinutes(),
@@ -256,8 +272,10 @@
                         hAttending = false,
                         rAttending = false,
                         wAttending = false;
-                    for (var will in WILL_LIST) {
-                        for (var a in event.attendees) {
+                    for (var z = 0; z < WILL_LIST.length; z++) {
+                        var will = WILL_LIST[z];
+                        for (var w = 0; w < event.attendees.length; w++) {
+                            var a = event.attendees[w];
                             if (a.email == will.email && a.responseStatus == GCAL_ACCEPTED_STATUS) {
                                 switch(will.name) {
                                     case BISHOP_ID:
@@ -376,6 +394,26 @@
         
     }
 
+    function doTimeMachine(e) {
+        /*CUR_CAL_NUM = 0;
+        var month = parseInt($("#month").val()),
+            day = parseInt($("#day").val()),
+            year = parseInt($("#year").val()),
+            time = $("#time").val().split(":"),
+            timeObj = {
+                "month": month,
+                "day": day,
+                "year": year,
+                "hours": parseInt(time[0]),
+                "mins": parseInt(time[1])
+            };
+        loadCalendarApi(timeObj);*/
+        $("#Bishop").css("left", COORDINATE_MAP["11th - Back"].x);
+        $("#Bishop").css("top", COORDINATE_MAP["11th - Back"].y);
+        $(".Bishop.popup").html("<div class='popupText'>Will Bishop is at Community Experience Meeting in 11th - Back.</div>");
+        return false;
+    }
+
     /**
     * Append an element to the output div containing the given message.
     *
@@ -388,6 +426,7 @@
 
     function bindEvents() {
         $("#authorize-button").on("click", handleAuthClick);
+        $("#time-machine").on("click", doTimeMachine);
     }
 
     function init() {
